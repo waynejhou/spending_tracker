@@ -1,0 +1,32 @@
+{
+  "name": "jhouwayne.spending_tracker",
+  "version": "0.0.1",
+  "description": "A Spending Tracker",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "cmd /c .\\scripts\\debug.bat",
+    "debug-serve": "cmd /c .\\scripts\\debug-serve.bat",
+    "release": "cmd /c .\\scripts\\release.bat"
+  },
+  "author": "jhouwayne@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "sqlite3": "^5.0.2",
+    "ts-loader": "^9.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.12",
+    "@types/react": "^17.0.9",
+    "@types/react-dom": "^17.0.6",
+    "copy-webpack-plugin": "^9.0.0",
+    "html-webpack-plugin": "^5.3.1",
+    "typescript": "^4.3.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
