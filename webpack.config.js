@@ -34,12 +34,23 @@ module.exports = (env) => {
     }
     return [
         {
+            name: 'database',
+            target: 'node',
+            entry: './src/database/main.ts',
+            ...tsConfig,
+            output: {
+                filename: 'database.js',
+                path: path.resolve(__dirname, `dist/${modename}`),
+            },
+            externals: { 'sqlite3':'commonjs sqlite3', }
+        },
+        {
             name: 'server',
             target: 'node',
             entry: './src/server/main.ts',
             ...tsConfig,
             output: {
-                filename: 'main.js',
+                filename: 'server.js',
                 path: path.resolve(__dirname, `dist/${modename}`),
             },
         },
@@ -60,7 +71,7 @@ module.exports = (env) => {
                 })
             ],
             output: {
-                filename: 'bundle.js',
+                filename: 'client.js',
                 path: path.resolve(__dirname, `dist/${modename}/wwwroot`),
             },
             devServer:{
