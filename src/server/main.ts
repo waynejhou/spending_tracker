@@ -10,13 +10,12 @@ const route = {
 
 server.use(express.static(`${__dirname}/wwwroot`))
 
-server.get('/', (req, res)=>{
-    res.sendFile(`${__dirname}/view/index.html`)
-})
-
 console.log(route.api.helloworld)
 server.get(route.api.helloworld, (req, res)=>{
     res.send(JSON.stringify("Hello World"))
+})
+server.get('*', (req, res)=>{
+    res.sendFile(`${__dirname}/wwwroot/index.html`)
 })
 
 server.listen(port, ()=>{
