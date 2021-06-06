@@ -2,15 +2,15 @@ const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const path = require('path');
-const getMode = (env)=>{
+const getMode = (env) => {
     const isDevelopment
-    = (env.debug) && true
-    ;
-    if(isDevelopment) return ["debug", "development"]
+        = (env.debug) && true
+        ;
+    if (isDevelopment) return ["debug", "development"]
     const isProduction
-    = (env.release) && true
-    ;
-    if(isProduction) return ["release", "production"]
+        = (env.release) && true
+        ;
+    if (isProduction) return ["release", "production"]
     return ["release", "production"];
 }
 module.exports = (env) => {
@@ -42,7 +42,7 @@ module.exports = (env) => {
                 filename: 'database.js',
                 path: path.resolve(__dirname, `dist/${modename}`),
             },
-            externals: { 'sqlite3':'commonjs sqlite3', }
+            externals: { 'sqlite3': 'commonjs sqlite3', }
         },
         {
             name: 'server',
@@ -59,10 +59,10 @@ module.exports = (env) => {
             target: 'web',
             entry: './src/client/index.tsx',
             ...tsConfig,
-            plugins:[
+            plugins: [
                 new CopyPlugin({
-                    patterns:[
-                        {from: "wwwroot" }
+                    patterns: [
+                        { from: "wwwroot" }
                     ]
                 }),
                 new HtmlWebpackPlugin({
@@ -74,13 +74,16 @@ module.exports = (env) => {
                 filename: 'client.js',
                 path: path.resolve(__dirname, `dist/${modename}/wwwroot`),
             },
-            devServer:{
+            devServer: {
                 contentBase: path.resolve(__dirname, `dist/${modename}/wwwroot`),
                 proxy: {
-                    '/api':{
+                    '/api': {
                         target: 'http://localhost:5000',
                         secure: false
                     }
+                },
+                historyApiFallback: {
+                    index: 'index.html'
                 }
             },
         }
