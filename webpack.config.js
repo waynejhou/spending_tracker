@@ -1,5 +1,6 @@
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NodemonPlugin = require('nodemon-webpack-plugin')
 
 const path = require('path');
 const getMode = (env) => {
@@ -53,6 +54,9 @@ module.exports = (env) => {
                 filename: 'server.js',
                 path: path.resolve(__dirname, `dist/${modename}`),
             },
+            plugins: [
+                new NodemonPlugin(), // Dong
+            ],
         },
         {
             name: 'client',
@@ -62,12 +66,13 @@ module.exports = (env) => {
             plugins: [
                 new CopyPlugin({
                     patterns: [
-                        { from: "wwwroot" }
+                        { from: "wwwroot", to: "../wwwroot" }
                     ]
                 }),
                 new HtmlWebpackPlugin({
                     template: './view/index.html',
-                    filename: 'index.html',
+                    filename: '../view/index.html',
+                    publicPath: '/'
                 })
             ],
             output: {
@@ -75,15 +80,26 @@ module.exports = (env) => {
                 path: path.resolve(__dirname, `dist/${modename}/wwwroot`),
             },
             devServer: {
-                contentBase: path.resolve(__dirname, `dist/${modename}/wwwroot`),
+                contentBase: [
+                    path.resolve(__dirname, `dist/${modename}/view`),
+                    path.resolve(__dirname, `dist/${modename}/wwwroot`)
+                ],
+                index: 'index.html',
                 proxy: {
                     '/api': {
+                        target: 'http://localhost:5000',
+                        secure: false
+                    },
+                    '/action': {
                         target: 'http://localhost:5000',
                         secure: false
                     }
                 },
                 historyApiFallback: {
                     index: 'index.html'
+                },
+                open: {
+                    app: ['C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe', '--incognito']
                 }
             },
         }
